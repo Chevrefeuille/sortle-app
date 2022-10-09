@@ -12,6 +12,14 @@ interface Choice {
   value?: string;
   rank?: number;
 }
+
+interface RankingData {
+  criterion: string;
+  type: string;
+  left: string;
+  right: string;
+}
+
 const drag = ref(false);
 
 const dragOptions = {
@@ -22,8 +30,7 @@ const dragOptions = {
 };
 
 const choices: Ref<Choice[]> = ref([]);
-const criterion = ref("");
-const unit = ref("");
+const rankingData: Ref<RankingData | null> = ref(null);
 const loaded = ref(false);
 const rankingId = ref("");
 
@@ -34,8 +41,12 @@ onMounted(async () => {
       return { name: name, index: index };
     })
   );
-  criterion.value = ranking["criterion"];
-  unit.value = ranking["unit"];
+  rankingData.value = {
+    type: ranking["type"],
+    criterion: ranking["criterion"],
+    left: ranking["left"],
+    right: ranking["right"],
+  };
   rankingId.value = ranking["id"];
   loaded.value = true;
 });
@@ -70,21 +81,22 @@ const submit = async () => {
   </header>
   <main class="px-4">
     <div
-      v-if="loaded"
+      v-if="loaded && rankingData"
       class="container mx-auto max-w-5xl rounded-xl bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 p-4 shadow-xl md:bg-gradient-to-r"
     >
       <div class="mb-8">
         <p class="text-xl text-gray-200">
-          Sort the following 5 choices with incresing
-          <span class="font-bold">{{ criterion }}</span> (in {{ unit }}):
+          Sort the following 5 {{ rankingData.type }} by
+          <span class="font-bold">{{ rankingData.criterion }}</span
+          >:
         </p>
       </div>
       <div
         class="mb-8 flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
       >
-        <div>
+        <div class="md:w-1/12">
           <p class="text-gray-200">
-            Low <span class="font-bold">{{ criterion }}</span>
+            <span class="font-bold">{{ rankingData.left }}</span>
           </p>
         </div>
         <draggable
@@ -94,7 +106,7 @@ const submit = async () => {
           @start="drag = true"
           @end="drag = false"
           :disabled="corrected"
-          class="flex max-w-full flex-col justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
+          class="flex max-w-full flex-col justify-center space-y-4 md:w-10/12 md:flex-row md:space-y-0 md:space-x-4"
         >
           <template #item="{ element, index }">
             <div
@@ -138,9 +150,9 @@ const submit = async () => {
             </div>
           </template>
         </draggable>
-        <div>
+        <div class="md:w-1/12">
           <p class="text-gray-200">
-            High <span class="font-bold">{{ criterion }}</span>
+            <span class="font-bold">{{ rankingData.right }}</span>
           </p>
         </div>
       </div>
