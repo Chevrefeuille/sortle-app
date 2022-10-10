@@ -164,7 +164,7 @@ const submit = async () => {
         >
           <template #item="{ element, index }">
             <div
-              class="relative flex items-center justify-center rounded-xl bg-white p-2 opacity-75 shadow-xl md:aspect-square md:w-1/5"
+              class="relative flex flex-col items-center justify-center rounded-xl bg-white p-2 text-center opacity-75 shadow-xl md:w-1/5"
               :class="{
                 'cursor-move': !state.submitted,
                 'cursor-auto': state.submitted,
@@ -182,30 +182,28 @@ const submit = async () => {
                   {{ element.rank + 1 }}
                 </div>
               </div>
-              <div class="flex h-full flex-col justify-between">
-                <div>
-                  <p>
-                    <span
-                      class="text-xl font-semibold"
-                      :class="{
-                        'text-red-500':
-                          state.submitted && !state.correctPositions[index],
-                        'text-green-500 ':
-                          state.submitted && state.correctPositions[index],
-                        'text-gray-800': !state.submitted,
-                      }"
-                      >{{ element.name }}</span
-                    >
-                  </p>
-                </div>
-                <div>
-                  <p
-                    v-if="state.submitted"
-                    class="align-bottom font-light text-gray-600"
+              <div>
+                <p>
+                  <span
+                    class="text-xl font-semibold"
+                    :class="{
+                      'text-red-500':
+                        state.submitted && !state.correctPositions[index],
+                      'text-green-500 ':
+                        state.submitted && state.correctPositions[index],
+                      'text-gray-800': !state.submitted,
+                    }"
+                    >{{ element.name }}</span
                   >
-                    {{ element.value }}
-                  </p>
-                </div>
+                </p>
+              </div>
+              <div>
+                <p
+                  v-if="state.submitted"
+                  class="align-bottom font-light text-gray-600"
+                >
+                  {{ element.value }}
+                </p>
               </div>
             </div>
           </template>
