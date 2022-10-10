@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import type { Ref } from "vue";
 import { getDailyRanking, sendAnswer } from "@/services/api";
 import draggable from "vuedraggable";
 import { shuffle } from "lodash";
 import { useStorage } from "@vueuse/core";
-// import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 interface Choice {
   name: string;
@@ -148,7 +146,7 @@ const submit = async () => {
         class="mb-8 flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
       >
         <div class="md:w-1/12">
-          <p class="text-gray-200">
+          <p class="text-right text-gray-200">
             <span class="font-bold">{{ state.rankingData.left }}</span>
           </p>
         </div>
@@ -163,7 +161,11 @@ const submit = async () => {
         >
           <template #item="{ element, index }">
             <div
-              class="relative flex cursor-move items-center justify-center rounded-xl bg-white p-2 opacity-75 shadow-xl md:aspect-square md:w-1/5"
+              class="relative flex items-center justify-center rounded-xl bg-white p-2 opacity-75 shadow-xl md:aspect-square md:w-1/5"
+              :class="{
+                'cursor-move': !state.submitted,
+                'cursor-auto': state.submitted,
+              }"
             >
               <div
                 v-if="state.submitted"
@@ -225,16 +227,16 @@ const submit = async () => {
             Your score: <span class="font-bold">{{ state.score }} / 5</span>
           </p>
           <p>
-            Number of game played:
+            Number of games played:
             <span class="font-bold">{{ statistics.numberPlayed }}</span>
           </p>
           <p>
             Current streak:
-            <span class="font-bold">{{ statistics.numberPlayed }}</span>
+            <span class="font-bold">{{ statistics.currentStreak }}</span>
           </p>
           <p>
             Max streak:
-            <span class="font-bold">{{ statistics.numberPlayed }}</span>
+            <span class="font-bold">{{ statistics.maxStreak }}</span>
           </p>
         </div>
       </div>
