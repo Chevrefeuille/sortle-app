@@ -137,8 +137,11 @@ const submit = async () => {
     >
       <div class="mb-8">
         <p class="text-xl text-gray-200">
-          Sort the following 5 {{ state.rankingData.type }} by
-          <span class="font-bold">{{ state.rankingData.criterion }}</span
+          Sort the following
+          <span class="font-extrabold text-gray-100">{{
+            state.rankingData.type
+          }}</span>
+          by <span>{{ state.rankingData.criterion }}</span
           >:
         </p>
       </div>
