@@ -11,8 +11,11 @@ import {
   BackwardIcon,
 } from "@heroicons/vue/24/outline";
 // import StatisticsModal from "./components/StatisticsModal.vue";
-
+import { useModalsStore } from "@/stores/modals";
 import StatisticsModal from "./components/StatisticsModal.vue";
+import HowToPlayModal from "./components/HowToPlayModal.vue";
+
+import { useStatisticsStore } from "@/stores/statistics";
 
 interface Choice {
   name: string;
@@ -35,14 +38,6 @@ interface State {
   correctPositions: number[];
 }
 
-interface Statistics {
-  lastDayPlayed: string | null;
-  numberPlayed: number;
-  currentStreak: number;
-  maxStreak: number;
-  scores: { [key: number]: number };
-}
-
 const drag = ref(false);
 const dragOptions = {
   animation: 200,
@@ -50,14 +45,6 @@ const dragOptions = {
   disabled: false,
   ghostClass: "bg-slate-500",
 };
-
-const statistics = useStorage("sortle-statistics", {
-  lastDayPlayed: null,
-  numberPlayed: 0,
-  currentStreak: 0,
-  maxStreak: 0,
-  scores: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-} as Statistics);
 
 const isYesterday = (date: string | null) => {
   if (date) {
@@ -70,8 +57,10 @@ const isYesterday = (date: string | null) => {
   return false;
 };
 
-if (isYesterday(statistics.value.lastDayPlayed)) {
-  statistics.value.currentStreak = 0;
+const statisticsStore = useStatisticsStore();
+
+if (isYesterday(statisticsStore.statistics.lastDayPlayed)) {
+  statisticsStore.statistics.currentStreak = 0;
 }
 
 const state = useStorage("sortle-state", {
@@ -89,8 +78,8 @@ onMounted(async () => {
   // fetch daily challenge
   const today = new Date();
   if (
-    !statistics.value.lastDayPlayed ||
-    today.toDateString() !== statistics.value.lastDayPlayed ||
+    !statisticsStore.statistics.lastDayPlayed ||
+    today.toDateString() !== statisticsStore.statistics.lastDayPlayed ||
     !state.value.submitted
   ) {
     const dailyRanking = await getDailyRanking();
@@ -129,16 +118,21 @@ const submit = async () => {
 
   // update statistics in localStorage
   const now = new Date();
-  statistics.value.lastDayPlayed = now.toDateString();
-  statistics.value.numberPlayed += 1;
-  statistics.value.currentStreak += 1;
-  if (statistics.value.currentStreak > statistics.value.maxStreak) {
-    statistics.value.maxStreak += 1;
+  statisticsStore.statistics.lastDayPlayed = now.toDateString();
+  statisticsStore.statistics.numberPlayed += 1;
+  statisticsStore.statistics.currentStreak += 1;
+  if (
+    statisticsStore.statistics.currentStreak >
+    statisticsStore.statistics.maxStreak
+  ) {
+    statisticsStore.statistics.maxStreak += 1;
   }
   if (state.value.score) {
-    statistics.value.scores[state.value.score] += 1;
+    statisticsStore.statistics.scores[state.value.score] += 1;
   }
 };
+
+const modalStore = useModalsStore();
 </script>
 
 <template>
@@ -158,10 +152,10 @@ const submit = async () => {
         SORTLE
       </div>
       <div class="flex space-x-2">
-        <div class="cursor-pointer">
+        <div class="cursor-pointer" @click="modalStore.toggleStatistics()">
           <ChartBarIcon class="h-6 w-6 text-pink-500" />
         </div>
-        <div class="cursor-pointer">
+        <div class="cursor-pointer" @click="modalStore.toggleHowToPlay()">
           <QuestionMarkCircleIcon class="h-6 w-6 text-pink-500" />
         </div>
       </div>
@@ -264,21 +258,10 @@ const submit = async () => {
           <p class="mb-4 text-2xl">
             Your score: <span class="font-bold">{{ state.score }} / 5</span>
           </p>
-          <p>
-            Number of games played:
-            <span class="font-bold">{{ statistics.numberPlayed }}</span>
-          </p>
-          <p>
-            Current streak:
-            <span class="font-bold">{{ statistics.currentStreak }}</span>
-          </p>
-          <p>
-            Max streak:
-            <span class="font-bold">{{ statistics.maxStreak }}</span>
-          </p>
         </div>
       </div>
     </div>
     <StatisticsModal />
+    <HowToPlayModal />
   </main>
 </template>
