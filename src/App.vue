@@ -1,83 +1,18 @@
 <script setup lang="ts">
 import { drag, dragOptions } from "@/composables/draggables";
-import { onMounted } from "vue";
-import { getDailyRanking, sendAnswer } from "@/services/api";
+import { sendAnswer } from "@/services/api";
+
 import draggable from "vuedraggable";
-import { shuffle } from "lodash";
-import { state } from "@/composables/gameState";
+
+import { useState } from "@/composables/state";
+import { useStatistics } from "@/composables/statistics";
 
 import HeaderBar from "@/components/HeaderBar.vue";
 import StatisticsModal from "@/components/StatisticsModal.vue";
 import HowToPlayModal from "@/components/HowToPlayModal.vue";
 
-import { useStatisticsStore } from "@/stores/statistics";
-
-interface Choice {
-  name: string;
-  index: number;
-  value?: string;
-  rank?: number;
-}
-interface RankingData {
-  criterion: string;
-  type: string;
-  left: string;
-  right: string;
-}
-
-interface State {
-  submitted: boolean;
-  score: number | null;
-  ranking: Choice[];
-  rankingData: RankingData | null;
-  correctPositions: number[];
-}
-
-const isYesterday = (date: string | null) => {
-  if (date) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (yesterday.toDateString() === date) {
-      return true;
-    }
-  }
-  return false;
-};
-
-const statisticsStore = useStatisticsStore();
-
-if (isYesterday(statisticsStore.statistics.lastDayPlayed)) {
-  statisticsStore.statistics.currentStreak = 0;
-}
-
-// const choices: Ref<Choice[]> = ref([]);
-
-onMounted(async () => {
-  // fetch daily challenge
-  const today = new Date();
-  if (
-    !statisticsStore.statistics.lastDayPlayed ||
-    today.toDateString() !== statisticsStore.statistics.lastDayPlayed ||
-    !state.value.submitted
-  ) {
-    const dailyRanking = await getDailyRanking();
-    state.value.ranking = shuffle(
-      dailyRanking["choices"].map((name: string, index: number) => {
-        return { name: name, index: index };
-      })
-    );
-    state.value.rankingData = {
-      type: dailyRanking["type"],
-      criterion: dailyRanking["criterion"],
-      left: dailyRanking["left"],
-      right: dailyRanking["right"],
-    };
-    state.value.rankingId = dailyRanking["id"];
-    state.value.submitted = false;
-    state.value.score = null;
-    state.value.correctPositions = [];
-  }
-});
+const state = useState();
+const statistics = useStatistics();
 
 const submit = async () => {
   const check = await sendAnswer({
@@ -96,17 +31,14 @@ const submit = async () => {
 
   // update statistics in localStorage
   const now = new Date();
-  statisticsStore.statistics.lastDayPlayed = now.toDateString();
-  statisticsStore.statistics.numberPlayed += 1;
-  statisticsStore.statistics.currentStreak += 1;
-  if (
-    statisticsStore.statistics.currentStreak >
-    statisticsStore.statistics.maxStreak
-  ) {
-    statisticsStore.statistics.maxStreak += 1;
+  statistics.lastDayPlayed = now.toDateString();
+  statistics.numberPlayed += 1;
+  statistics.currentStreak += 1;
+  if (statistics.currentStreak > statistics.maxStreak) {
+    statistics.maxStreak += 1;
   }
   if (state.value.score) {
-    statisticsStore.statistics.scores[state.value.score] += 1;
+    statistics.scores[state.value.score] += 1;
   }
 };
 </script>
