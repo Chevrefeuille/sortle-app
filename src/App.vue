@@ -11,35 +11,17 @@ import HeaderBar from "@/components/HeaderBar.vue";
 import StatisticsModal from "@/components/StatisticsModal.vue";
 import HowToPlayModal from "@/components/HowToPlayModal.vue";
 
-const state = useState();
-const statistics = useStatistics();
+const { state, updateState } = useState();
+const { updateStatistics } = useStatistics();
 
 const submit = async () => {
-  const check = await sendAnswer({
+  const rightAnswer = await sendAnswer({
     ranking: state.value.ranking,
     id: state.value.rankingId,
   });
-  state.value.correctPositions = check["correction"];
-  state.value.score = check["score"];
-  state.value.ranking = state.value.ranking.map((choice: any) => {
-    const choiceData = check["ranking"].find((r: any) => r.name == choice.name);
-    choice.value = choiceData.value;
-    choice.rank = choiceData.rank;
-    return choice;
-  });
-  state.value.submitted = true;
 
-  // update statistics in localStorage
-  const now = new Date();
-  statistics.lastDayPlayed = now.toDateString();
-  statistics.numberPlayed += 1;
-  statistics.currentStreak += 1;
-  if (statistics.currentStreak > statistics.maxStreak) {
-    statistics.maxStreak += 1;
-  }
-  if (state.value.score) {
-    statistics.scores[state.value.score] += 1;
-  }
+  updateState(rightAnswer);
+  updateStatistics(rightAnswer["score"]);
 };
 </script>
 

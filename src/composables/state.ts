@@ -57,5 +57,19 @@ export function useState() {
     }
   });
 
-  return state;
+  const updateState = (answer: any) => {
+    state.value.correctPositions = answer["correction"];
+    state.value.score = answer["score"];
+    state.value.ranking = state.value.ranking.map((choice: any) => {
+      const choiceData = answer["ranking"].find(
+        (r: any) => r.name == choice.name
+      );
+      choice.value = choiceData.value;
+      choice.rank = choiceData.rank;
+      return choice;
+    });
+    state.value.submitted = true;
+  };
+
+  return { state, updateState };
 }

@@ -18,5 +18,19 @@ export function useStatistics() {
     statisticsStore.statistics.currentStreak = 0;
   }
 
-  return statisticsStore.statistics;
+  const updateStatistics = (score: number) => {
+    const now = new Date();
+    statisticsStore.statistics.lastDayPlayed = now.toDateString();
+    statisticsStore.statistics.numberPlayed += 1;
+    statisticsStore.statistics.currentStreak += 1;
+    if (
+      statisticsStore.statistics.currentStreak >
+      statisticsStore.statistics.maxStreak
+    ) {
+      statisticsStore.statistics.maxStreak += 1;
+    }
+    statisticsStore.statistics.scores[score] += 1;
+  };
+
+  return { updateStatistics };
 }
