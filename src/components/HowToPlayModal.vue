@@ -9,7 +9,9 @@ const modalStore = useModalsStore();
     :open="modalStore.howToPlayOpened"
     @toggleModal="modalStore.toggleHowToPlay()"
   >
-    <template v-slot:title>Statistics</template>
-    <template v-slot:content>Simple! </template>
+    <template v-slot:title>How to play</template>
+    <template v-slot:content
+      >Drag and drop the cards to order them according to the given criterion.
+    </template>
   </ModalDialog>
 </template>

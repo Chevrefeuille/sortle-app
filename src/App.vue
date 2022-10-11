@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { drag, dragOptions } from "@/composables/draggables";
+import { onMounted } from "vue";
 import { getDailyRanking, sendAnswer } from "@/services/api";
 import draggable from "vuedraggable";
 import { shuffle } from "lodash";
-import { useStorage } from "@vueuse/core";
-import {
-  ChartBarIcon,
-  QuestionMarkCircleIcon,
-  Cog8ToothIcon,
-  BackwardIcon,
-} from "@heroicons/vue/24/outline";
-// import StatisticsModal from "./components/StatisticsModal.vue";
-import { useModalsStore } from "@/stores/modals";
-import StatisticsModal from "./components/StatisticsModal.vue";
-import HowToPlayModal from "./components/HowToPlayModal.vue";
+import { state } from "@/composables/gameState";
+
+import HeaderBar from "@/components/HeaderBar.vue";
+import StatisticsModal from "@/components/StatisticsModal.vue";
+import HowToPlayModal from "@/components/HowToPlayModal.vue";
 
 import { useStatisticsStore } from "@/stores/statistics";
 
@@ -38,14 +33,6 @@ interface State {
   correctPositions: number[];
 }
 
-const drag = ref(false);
-const dragOptions = {
-  animation: 200,
-  group: "description",
-  disabled: false,
-  ghostClass: "bg-slate-500",
-};
-
 const isYesterday = (date: string | null) => {
   if (date) {
     const yesterday = new Date();
@@ -63,16 +50,7 @@ if (isYesterday(statisticsStore.statistics.lastDayPlayed)) {
   statisticsStore.statistics.currentStreak = 0;
 }
 
-const state = useStorage("sortle-state", {
-  submitted: false,
-  score: null,
-  ranking: [],
-  rankingData: null,
-  correctPositions: [],
-} as State);
-
 // const choices: Ref<Choice[]> = ref([]);
-const rankingId = ref("");
 
 onMounted(async () => {
   // fetch daily challenge
@@ -94,7 +72,7 @@ onMounted(async () => {
       left: dailyRanking["left"],
       right: dailyRanking["right"],
     };
-    rankingId.value = dailyRanking["id"];
+    state.value.rankingId = dailyRanking["id"];
     state.value.submitted = false;
     state.value.score = null;
     state.value.correctPositions = [];
@@ -104,7 +82,7 @@ onMounted(async () => {
 const submit = async () => {
   const check = await sendAnswer({
     ranking: state.value.ranking,
-    id: rankingId.value,
+    id: state.value.rankingId,
   });
   state.value.correctPositions = check["correction"];
   state.value.score = check["score"];
@@ -131,36 +109,10 @@ const submit = async () => {
     statisticsStore.statistics.scores[state.value.score] += 1;
   }
 };
-
-const modalStore = useModalsStore();
 </script>
 
 <template>
-  <header class="mb-8 flex h-16 items-center justify-center">
-    <div class="flex w-full max-w-xl justify-between">
-      <div class="flex space-x-2">
-        <div class="cursor-pointer">
-          <BackwardIcon class="h-6 w-6 text-indigo-500" />
-        </div>
-        <div class="cursor-pointer">
-          <Cog8ToothIcon class="h-6 w-6 text-indigo-500" />
-        </div>
-      </div>
-      <div
-        class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-center text-4xl font-extrabold text-transparent"
-      >
-        SORTLE
-      </div>
-      <div class="flex space-x-2">
-        <div class="cursor-pointer" @click="modalStore.toggleStatistics()">
-          <ChartBarIcon class="h-6 w-6 text-pink-500" />
-        </div>
-        <div class="cursor-pointer" @click="modalStore.toggleHowToPlay()">
-          <QuestionMarkCircleIcon class="h-6 w-6 text-pink-500" />
-        </div>
-      </div>
-    </div>
-  </header>
+  <HeaderBar />
   <main class="px-4">
     <div
       v-if="state.rankingData"
