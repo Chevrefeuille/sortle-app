@@ -4,8 +4,15 @@ import { getDailyRanking, sendAnswer } from "@/services/api";
 import draggable from "vuedraggable";
 import { shuffle } from "lodash";
 import { useStorage } from "@vueuse/core";
-// import { ChartBarIcon } from "@heroicons/vue/24/outline";
+import {
+  ChartBarIcon,
+  QuestionMarkCircleIcon,
+  Cog8ToothIcon,
+  BackwardIcon,
+} from "@heroicons/vue/24/outline";
 // import StatisticsModal from "./components/StatisticsModal.vue";
+
+import StatisticsModal from "./components/StatisticsModal.vue";
 
 interface Choice {
   name: string;
@@ -135,11 +142,29 @@ const submit = async () => {
 </script>
 
 <template>
-  <header class="mb-8 flex h-16 items-center justify-center text-center">
-    <div
-      class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-4xl font-extrabold text-transparent"
-    >
-      SORTLE
+  <header class="mb-8 flex h-16 items-center justify-center">
+    <div class="flex w-full max-w-xl justify-between">
+      <div class="flex space-x-2">
+        <div class="cursor-pointer">
+          <BackwardIcon class="h-6 w-6 text-indigo-500" />
+        </div>
+        <div class="cursor-pointer">
+          <Cog8ToothIcon class="h-6 w-6 text-indigo-500" />
+        </div>
+      </div>
+      <div
+        class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-center text-4xl font-extrabold text-transparent"
+      >
+        SORTLE
+      </div>
+      <div class="flex space-x-2">
+        <div class="cursor-pointer">
+          <ChartBarIcon class="h-6 w-6 text-pink-500" />
+        </div>
+        <div class="cursor-pointer">
+          <QuestionMarkCircleIcon class="h-6 w-6 text-pink-500" />
+        </div>
+      </div>
     </div>
   </header>
   <main class="px-4">
@@ -254,5 +279,6 @@ const submit = async () => {
         </div>
       </div>
     </div>
+    <StatisticsModal />
   </main>
 </template>
