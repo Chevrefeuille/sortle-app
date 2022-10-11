@@ -29,7 +29,7 @@ interface State {
 }
 
 interface Statistics {
-  lastDayPlayed: Date | null;
+  lastDayPlayed: string | null;
   numberPlayed: number;
   currentStreak: number;
   maxStreak: number;
@@ -52,11 +52,11 @@ const statistics = useStorage("sortle-statistics", {
   scores: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
 } as Statistics);
 
-const isYesterday = (date: Date | null) => {
+const isYesterday = (date: string | null) => {
   if (date) {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    if (yesterday.toDateString() === date.toDateString()) {
+    if (yesterday.toDateString() === date) {
       return true;
     }
   }
@@ -81,10 +81,9 @@ const rankingId = ref("");
 onMounted(async () => {
   // fetch daily challenge
   const today = new Date();
-
   if (
     !statistics.value.lastDayPlayed ||
-    today.toDateString() == statistics.value.lastDayPlayed.toDateString() ||
+    today.toDateString() !== statistics.value.lastDayPlayed ||
     !state.value.submitted
   ) {
     const dailyRanking = await getDailyRanking();
@@ -122,6 +121,8 @@ const submit = async () => {
   state.value.submitted = true;
 
   // update statistics in localStorage
+  const now = new Date();
+  statistics.value.lastDayPlayed = now.toDateString();
   statistics.value.numberPlayed += 1;
   statistics.value.currentStreak += 1;
   if (statistics.value.currentStreak > statistics.value.maxStreak) {
