@@ -4,6 +4,8 @@ import { getDailyRanking, sendAnswer } from "@/services/api";
 import draggable from "vuedraggable";
 import { shuffle } from "lodash";
 import { useStorage } from "@vueuse/core";
+// import { ChartBarIcon } from "@heroicons/vue/24/outline";
+// import StatisticsModal from "./components/StatisticsModal.vue";
 
 interface Choice {
   name: string;
@@ -78,7 +80,13 @@ const rankingId = ref("");
 
 onMounted(async () => {
   // fetch daily challenge
-  if (!state.value.submitted) {
+  const today = new Date();
+
+  if (
+    !statistics.value.lastDayPlayed ||
+    today.toDateString() == statistics.value.lastDayPlayed.toDateString() ||
+    !state.value.submitted
+  ) {
     const dailyRanking = await getDailyRanking();
     state.value.ranking = shuffle(
       dailyRanking["choices"].map((name: string, index: number) => {
@@ -92,6 +100,9 @@ onMounted(async () => {
       right: dailyRanking["right"],
     };
     rankingId.value = dailyRanking["id"];
+    state.value.submitted = false;
+    state.value.score = null;
+    state.value.correctPositions = [];
   }
 });
 
