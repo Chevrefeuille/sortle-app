@@ -37,20 +37,16 @@ export function useState() {
 
   onMounted(async () => {
     const dailyRanking = await getDailyRanking();
-    if (state.value.rankingId != dailyRanking["id"]) {
+    if (state.value.rankingId != dailyRanking["_id"]) {
       // if daily not yet played
-      state.value.ranking = shuffle(
-        dailyRanking["choices"].map((name: string, index: number) => {
-          return { name: name, index: index };
-        })
-      );
+      state.value.ranking = shuffle(dailyRanking["choices"]);
       state.value.rankingData = {
         type: dailyRanking["type"],
         criterion: dailyRanking["criterion"],
         left: dailyRanking["left"],
         right: dailyRanking["right"],
       };
-      state.value.rankingId = dailyRanking["id"];
+      state.value.rankingId = dailyRanking["_id"];
       state.value.submitted = false;
       state.value.score = null;
       state.value.correctPositions = [];
@@ -61,7 +57,7 @@ export function useState() {
     state.value.correctPositions = answer["correction"];
     state.value.score = answer["score"];
     state.value.ranking = state.value.ranking.map((choice: any) => {
-      const choiceData = answer["ranking"].find(
+      const choiceData = answer["ranking"].choices.find(
         (r: any) => r.name == choice.name
       );
       choice.value = choiceData.value;
