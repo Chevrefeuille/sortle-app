@@ -6,6 +6,8 @@ import {
   Cog8ToothIcon,
   BackwardIcon,
 } from "@heroicons/vue/24/outline";
+import StatisticsModal from "@/components/StatisticsModal.vue";
+import HowToPlayModal from "@/components/HowToPlayModal.vue";
 
 const modalStore = useModalsStore();
 </script>
@@ -36,4 +38,6 @@ const modalStore = useModalsStore();
       </div>
     </div>
   </header>
+  <StatisticsModal />
+  <HowToPlayModal />
 </template>
