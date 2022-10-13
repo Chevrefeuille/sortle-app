@@ -36,3 +36,21 @@ export const sendAnswer = async (answer: any) => {
     }
   }
 };
+
+export const createRanking = async (ranking: any, token: any) => {
+  try {
+    const res = await instance.post("rankings/", ranking, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("error message: ", error.message);
+      return error.message;
+    } else {
+      console.log("unexpected error: ", error);
+      return "An unexpected error occurred";
+    }
+  }
+};
