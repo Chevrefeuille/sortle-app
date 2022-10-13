@@ -1,36 +1,48 @@
 <script setup lang="ts">
 import { createRanking } from "@/services/api";
 import { useAuth0 } from "@auth0/auth0-vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import type { IRanking } from "@/types";
 
 const { getAccessTokenSilently } = useAuth0();
 
-let choices = [];
-for (let i = 0; i < 5; i++) {
-  choices[i] = {
-    name: "",
-    rank: i,
-    value: "",
-  };
-}
+const ranking = ref<IRanking | null>(null);
 
-const ranking = ref({
-  criterion: "",
-  left: "",
-  right: "",
-  type: "",
-  choices: choices,
+const initRanking = () => {
+  let choices = [];
+  for (let i = 0; i < 5; i++) {
+    choices[i] = {
+      name: "",
+      rank: i,
+      value: "",
+    };
+  }
+
+  ranking.value = {
+    criterion: "",
+    left: "",
+    right: "",
+    type: "",
+    choices: choices,
+  };
+};
+
+onMounted(async () => {
+  initRanking();
 });
 
 const create = async () => {
   const token = await getAccessTokenSilently();
-  const data = await createRanking(ranking.value, token);
+  createRanking(ranking.value, token).then(() => {
+    initRanking();
+  });
 };
 </script>
 
 <template>
   <main class="px-4">
     <div
+      v-if="ranking"
       class="container mx-auto max-w-5xl rounded-xl bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 p-4 shadow-xl md:bg-gradient-to-r"
     >
       <div class="mb-8">

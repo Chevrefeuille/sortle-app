@@ -11,9 +11,10 @@ const { state, updateState } = useState();
 const { updateStatistics } = useStatistics();
 
 const submit = async () => {
+  if (!state.value.ranking) return;
   const rightAnswer = await sendAnswer({
-    ranking: state.value.ranking,
-    id: state.value.rankingId,
+    ranking: state.value.ranking.choices,
+    id: state.value.ranking._id,
   });
 
   updateState(rightAnswer);
@@ -24,16 +25,16 @@ const submit = async () => {
 <template>
   <main class="px-4">
     <div
-      v-if="state.rankingData"
+      v-if="state.ranking"
       class="container mx-auto max-w-5xl rounded-xl bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 p-4 shadow-xl md:bg-gradient-to-r"
     >
       <div class="mb-8">
         <p class="text-xl text-gray-200">
           Sort the following
           <span class="font-extrabold text-gray-100">{{
-            state.rankingData.type
+            state.ranking.type
           }}</span>
-          by <span>{{ state.rankingData.criterion }}</span
+          by <span>{{ state.ranking.criterion }}</span
           >:
         </p>
       </div>
@@ -42,11 +43,11 @@ const submit = async () => {
       >
         <div class="md:w-1/12">
           <p class="text-right text-gray-200">
-            <span class="font-bold">{{ state.rankingData.left }}</span>
+            <span class="font-bold">{{ state.ranking.left }}</span>
           </p>
         </div>
         <draggable
-          v-model="state.ranking"
+          v-model="state.ranking.choices"
           item-key="id"
           v-bind="dragOptions"
           @start="drag = true"
@@ -102,7 +103,7 @@ const submit = async () => {
         </draggable>
         <div class="md:w-1/12">
           <p class="text-gray-200">
-            <span class="font-bold">{{ state.rankingData.right }}</span>
+            <span class="font-bold">{{ state.ranking.right }}</span>
           </p>
         </div>
       </div>
