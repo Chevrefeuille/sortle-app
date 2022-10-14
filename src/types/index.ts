@@ -1,6 +1,5 @@
 export interface IChoice {
   name: string;
-  rank: number;
   value: string;
 }
 

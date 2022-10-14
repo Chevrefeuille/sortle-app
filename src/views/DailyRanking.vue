@@ -117,8 +117,12 @@ const submit = async () => {
       </div>
       <div v-else class="flex justify-center text-xl text-gray-200">
         <div>
-          <p class="mb-4 text-2xl">
+          <p class="text-xl">
             Your score: <span class="font-bold">{{ state.score }} / 5</span>
+          </p>
+          <p class="mb-4 text-xl">
+            Your Kendall-tau score:
+            <span class="font-bold">{{ state.kendallScore }}%</span>
           </p>
         </div>
       </div>

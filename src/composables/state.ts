@@ -7,6 +7,7 @@ import type { IRanking } from "@/types";
 export interface State {
   submitted: boolean;
   score: number | null;
+  kendallScore: number | null;
   ranking: IRanking | null;
   correctPositions: number[];
 }
@@ -15,6 +16,7 @@ export function useState() {
   const state = useStorage("sortle-state", {
     submitted: false,
     score: null,
+    kendallScore: null,
     ranking: null,
     correctPositions: [],
   } as State);
@@ -37,6 +39,7 @@ export function useState() {
   const updateState = (answer: any) => {
     state.value.correctPositions = answer["correction"];
     state.value.score = answer["score"];
+    state.value.kendallScore = answer["kendallScore"];
     if (!state.value.ranking) return;
     state.value.ranking.choices = state.value.ranking.choices.map(
       (choice: any) => {

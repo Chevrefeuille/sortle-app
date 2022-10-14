@@ -11,7 +11,10 @@ const modalStore = useModalsStore();
   >
     <template v-slot:title>How to play</template>
     <template v-slot:content
-      >Drag and drop the cards to order them according to the given criterion.
+      ><p>
+        Drag and drop the cards to order them according to the given criterion.
+      </p>
+      <p>A new ranking is available every day!</p>
     </template>
   </ModalDialog>
 </template>
