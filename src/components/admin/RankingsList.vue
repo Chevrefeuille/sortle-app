@@ -65,10 +65,22 @@ const fetchPageRankings = ({
       </div>
       <div class="my-8 flex justify-center space-x-12">
         <button :disabled="isFirstPage" @click="prev">
-          <ArrowLeftCircleIcon class="h-12 w-12 text-indigo-500" />
+          <ArrowLeftCircleIcon
+            class="h-12 w-12"
+            :class="{
+              'text-indigo-500': !isFirstPage,
+              'text-gray-300': isFirstPage,
+            }"
+          />
         </button>
         <button :disabled="isLastPage" @click="next">
-          <ArrowRightCircleIcon class="h-12 w-12 text-pink-500" />
+          <ArrowRightCircleIcon
+            class="h-12 w-12"
+            :class="{
+              'text-pink-500': !isLastPage,
+              'text-gray-300': isLastPage,
+            }"
+          />
         </button></div
     ></UseOffsetPagination>
   </main>

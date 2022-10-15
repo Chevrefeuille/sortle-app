@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IRanking, IChoice } from "@/types";
-import { ref } from "vue";
+import type { IRanking } from "@/types";
+import { toRef } from "vue";
 import { useDraggable } from "@/composables/draggables";
 import draggable from "vuedraggable";
 
@@ -11,7 +11,7 @@ const props = defineProps<{
   correction: number[] | null;
 }>();
 
-const choices = ref(props.ranking.choices);
+const ranking = toRef(props, "ranking");
 
 const { drag, dragOptions } = useDraggable();
 </script>
@@ -38,12 +38,12 @@ const { drag, dragOptions } = useDraggable();
         </p>
       </div>
       <draggable
-        v-model="choices"
+        v-model="ranking.choices"
         item-key="id"
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
-        @change="$emit('reorder', choices)"
+        @change="$emit('reorder', ranking.choices)"
         :disabled="!isDraggable"
         class="flex max-w-full flex-col justify-center space-y-4 md:w-10/12 md:flex-row md:space-y-0 md:space-x-4"
       >
