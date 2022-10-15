@@ -9,7 +9,7 @@ export interface State {
   score: number | null;
   kendallScore: number | null;
   ranking: IRanking | null;
-  correctPositions: number[];
+  correctPositions: number[] | null;
 }
 
 export function useState() {
@@ -18,7 +18,7 @@ export function useState() {
     score: null,
     kendallScore: null,
     ranking: null,
-    correctPositions: [],
+    correctPositions: null,
   } as State);
 
   onMounted(async () => {
@@ -32,7 +32,7 @@ export function useState() {
       state.value.ranking.choices = shuffle(dailyRanking["choices"]);
       state.value.submitted = false;
       state.value.score = null;
-      state.value.correctPositions = [];
+      state.value.correctPositions = null;
     }
   });
 
@@ -47,7 +47,6 @@ export function useState() {
           (r: any) => r.name == choice.name
         );
         choice.value = choiceData.value;
-        choice.rank = choiceData.rank;
         return choice;
       }
     );

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DailyRanking from "@/views/DailyRanking.vue";
 import AdminPanel from "@/views/AdminPanel.vue";
+import AddRanking from "@/components/admin/AddRanking.vue";
+import RankingsList from "@/components/admin/RankingsList.vue";
 import { authGuard } from "@auth0/auth0-vue";
 
 const router = createRouter({
@@ -16,6 +18,16 @@ const router = createRouter({
       name: "admin",
       component: AdminPanel,
       beforeEnter: authGuard,
+      children: [
+        {
+          path: "rankings",
+          component: RankingsList,
+        },
+        {
+          path: "add",
+          component: AddRanking,
+        },
+      ],
     },
   ],
 });
