@@ -59,7 +59,7 @@ const fetchPageRankings = ({
           :key="i"
           :ranking="ranking"
           :has-hidden-values="false"
-          :is-draggable="true"
+          :is-draggable="false"
           :correction="null"
         ></RankingCard>
       </div>
