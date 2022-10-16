@@ -64,7 +64,7 @@ const { drag, dragOptions } = useDraggable();
               }"
             >
               <div class="font-bold text-gray-100">
-                {{ correction[index] + 1 }}
+                {{ element.rank }}
               </div>
             </div>
             <div>

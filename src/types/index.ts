@@ -1,6 +1,7 @@
 export interface IChoice {
   name: string;
   value: string;
+  rank?: number;
 }
 
 export interface IRanking {

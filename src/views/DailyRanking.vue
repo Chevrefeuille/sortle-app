@@ -23,10 +23,8 @@ const submit = async () => {
 };
 
 const reorder = (choices: IChoice[]) => {
-  console.log("here");
   if (state.value.ranking) {
     state.value.ranking.choices = choices;
-    console.log(state.value.ranking.choices);
   }
 };
 </script>

@@ -43,10 +43,11 @@ export function useState() {
     if (!state.value.ranking) return;
     state.value.ranking.choices = state.value.ranking.choices.map(
       (choice: any) => {
-        const choiceData = answer["ranking"].choices.find(
+        const choiceIndex = answer["ranking"].choices.findIndex(
           (r: any) => r.name == choice.name
         );
-        choice.value = choiceData.value;
+        choice.value = answer["ranking"].choices[choiceIndex].value;
+        choice.rank = choiceIndex + 1;
         return choice;
       }
     );
