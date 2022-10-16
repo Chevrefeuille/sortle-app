@@ -8,6 +8,7 @@ import { UseOffsetPagination } from "@vueuse/components";
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
+  PencilSquareIcon,
 } from "@heroicons/vue/24/outline";
 
 const { getAccessTokenSilently } = useAuth0();
@@ -44,6 +45,10 @@ const fetchPageRankings = ({
 
 <template>
   <main class="px-8">
+    <div class="mb-4 text-center text-lg">
+      Found <span class="font-bold">{{ total }}</span> rankings.
+    </div>
+
     <UseOffsetPagination
       v-if="total"
       v-slot="{ next, prev, isFirstPage, isLastPage }"
@@ -54,31 +59,39 @@ const fetchPageRankings = ({
       @page-size-change="fetchPageRankings"
     >
       <div class="flex flex-col space-y-4">
-        <RankingCard
+        <div
+          class="flex items-center"
           v-for="(ranking, i) in rankings"
           :key="i"
-          :ranking="ranking"
-          :has-hidden-values="false"
-          :is-draggable="false"
-          :correction="null"
-        ></RankingCard>
+        >
+          <RankingCard
+            :ranking="ranking"
+            :has-hidden-values="false"
+            :is-draggable="false"
+            :correction="null"
+          ></RankingCard>
+          <RouterLink :to="ranking._id ? `/admin/rankings/${ranking._id}` : '#'"
+            ><PencilSquareIcon
+              class="h-8 w-8 text-pink-500 transition duration-100 ease-in hover:text-pink-300"
+          /></RouterLink>
+        </div>
       </div>
       <div class="my-8 flex justify-center space-x-12">
         <button :disabled="isFirstPage" @click="prev">
           <ArrowLeftCircleIcon
-            class="h-12 w-12"
+            class="h-12 w-12 transition duration-100 ease-in"
             :class="{
-              'text-indigo-500': !isFirstPage,
-              'text-gray-300': isFirstPage,
+              'text-indigo-500 hover:text-indigo-300': !isFirstPage,
+              'text-gray-300 ': isFirstPage,
             }"
           />
         </button>
         <button :disabled="isLastPage" @click="next">
           <ArrowRightCircleIcon
-            class="h-12 w-12"
+            class="h-12 w-12 transition duration-100 ease-in"
             :class="{
-              'text-pink-500': !isLastPage,
-              'text-gray-300': isLastPage,
+              'text-pink-500 hover:text-pink-300': !isLastPage,
+              'text-gray-300 ': isLastPage,
             }"
           />
         </button></div

@@ -39,6 +39,7 @@ const reorder = (choices: IChoice[]) => {
     :has-hidden-values="!state.submitted"
     :is-draggable="!state.submitted"
     :correction="state.correctPositions"
+    :is-editable="false"
     @reorder="reorder"
   ></RankingCard>
   <div v-if="!state.submitted" class="my-8 flex justify-center">

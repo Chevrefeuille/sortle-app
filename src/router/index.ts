@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DailyRanking from "@/views/DailyRanking.vue";
 import AdminPanel from "@/views/AdminPanel.vue";
 import AddRanking from "@/components/admin/AddRanking.vue";
+import EditRanking from "@/components/admin/EditRanking.vue";
 import RankingsList from "@/components/admin/RankingsList.vue";
 import { authGuard } from "@auth0/auth0-vue";
 
@@ -26,6 +27,10 @@ const router = createRouter({
         {
           path: "add",
           component: AddRanking,
+        },
+        {
+          path: "rankings/:id",
+          component: EditRanking,
         },
       ],
     },
