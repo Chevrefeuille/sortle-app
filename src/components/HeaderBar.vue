@@ -16,11 +16,8 @@ const modalStore = useModalsStore();
   <header class="mb-8 flex h-16 items-center justify-center">
     <div class="flex w-full max-w-xl justify-between">
       <div class="flex space-x-2">
-        <div class="cursor-pointer">
-          <BackwardIcon class="h-6 w-6 text-indigo-500" />
-        </div>
-        <div class="cursor-pointer">
-          <Cog8ToothIcon class="h-6 w-6 text-indigo-500" />
+        <div class="cursor-pointer" @click="modalStore.toggleStatistics()">
+          <ChartBarIcon class="h-6 w-6 text-indigo-500" />
         </div>
       </div>
       <div
@@ -29,9 +26,6 @@ const modalStore = useModalsStore();
         SORTLE
       </div>
       <div class="flex space-x-2">
-        <div class="cursor-pointer" @click="modalStore.toggleStatistics()">
-          <ChartBarIcon class="h-6 w-6 text-pink-500" />
-        </div>
         <div class="cursor-pointer" @click="modalStore.toggleHowToPlay()">
           <QuestionMarkCircleIcon class="h-6 w-6 text-pink-500" />
         </div>
