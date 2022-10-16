@@ -102,12 +102,12 @@ const modalStore = useModalsStore();
         The
         <a
           class="font-bold outline-none hover:text-gray-500"
-          href="https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient"
-          >Kendall rank correlation coefficient</a
+          href="https://en.wikipedia.org/wiki/Kendall_tau_distance"
+          >Kendall tau distance</a
         >
         is a measure of the accordance between two rankings that works by
         computing the number of incorrect pair rankings. In the first ranking,
-        there is only one inconsistent ranking (<span class="text-red-400"
+        there is only one inconsistent pair order (<span class="text-red-400"
           >3 &lt; 2</span
         >), leading to a <span class="font-bold">90%</span> score but in the
         second ranking, there are 7 (<span class="text-red-400">5 &lt; 2</span>,
