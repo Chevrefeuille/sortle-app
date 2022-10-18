@@ -13,7 +13,7 @@ const modalStore = useModalsStore();
 </script>
 
 <template>
-  <header class="mb-8 flex h-16 items-center justify-center">
+  <header class="mb-8 flex h-16 items-center justify-center px-8">
     <div class="flex w-full max-w-xl justify-between">
       <div class="flex space-x-2">
         <div class="cursor-pointer" @click="modalStore.toggleStatistics()">
