@@ -10,6 +10,7 @@ import HowToPlayModal from "@/components/HowToPlayModal.vue";
 import { shuffle } from "lodash";
 
 const letters = ["S", "O", "R", "T", "L", "E"];
+
 const translations = ref<number[]>([]);
 
 const randomShuffle = () => {

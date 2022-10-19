@@ -13,10 +13,10 @@ export const getDailyRanking = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
@@ -29,10 +29,10 @@ export const sendAnswer = async (answer: any) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
@@ -52,10 +52,10 @@ export const fetchRankings = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
@@ -70,10 +70,10 @@ export const fetchRanking = async (id: string, token: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
@@ -88,10 +88,10 @@ export const createRanking = async (ranking: any, token: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
@@ -110,10 +110,10 @@ export const updateRanking = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw error.message;
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw "An unexpected error occurred";
     }
   }
 };
