@@ -32,23 +32,30 @@ const modalStore = useModalsStore();
       <p>
         The
         <a
-          class="font-bold outline-none hover:text-gray-500"
+          class="font-bold text-purple-500 outline-none hover:text-purple-400"
           href="https://en.wikipedia.org/wiki/Kendall_tau_distance"
           >Kendall tau distance</a
         >
         is a measure of the accordance between two rankings that works by
         computing the number of incorrect pair rankings. In the first ranking,
-        there is only one inconsistent pair order (<span class="text-red-400"
+        there is only one inconsistent pair order (<span class="text-pink-500"
           >3 &lt; 2</span
         >), leading to a <span class="font-bold">90%</span> score but in the
-        second ranking, there are 7 (<span class="text-red-400">5 &lt; 2</span>,
-        <span class="text-red-400">5 &lt; 3</span>,
-        <span class="text-red-400">5 &lt; 4</span>,
-        <span class="text-red-400">5 &lt; 1</span>,
-        <span class="text-red-400">2 &lt; 1</span>,
-        <span class="text-red-400">3 &lt; 1</span> and
-        <span class="text-red-400">4 &lt; 1</span>), corresponding to a
-        <span class="font-bold">30%</span> score.
+        second ranking, there are 7 (<span class="text-pink-500">5 &lt; 2</span
+        >, <span class="text-pink-500">5 &lt; 3</span>,
+        <span class="text-pink-500">5 &lt; 4</span>,
+        <span class="text-pink-500">5 &lt; 1</span>,
+        <span class="text-pink-500">2 &lt; 1</span>,
+        <span class="text-pink-500">3 &lt; 1</span> and
+        <span class="text-pink-500">4 &lt; 1</span>), corresponding to a
+        <span class="font-bold">30%</span> score. You can think of it as the
+        number of swaps of two elements required to order the list correctly
+        (this is actually an existing sorting algorithm, the
+        <a
+          class="font-bold text-purple-500 outline-none hover:text-purple-400"
+          href="https://en.wikipedia.org/wiki/Bubble_sort"
+          >bubble sort</a
+        >).
       </p>
     </template>
   </ModalDialog>
