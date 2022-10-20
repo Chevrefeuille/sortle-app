@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ModalDialog from "@/components/ModalDialog.vue";
+import ModalDialog from "@/components/modals/ModalDialog.vue";
 import { useModalsStore } from "@/stores/modals";
 import { useStatisticsStore } from "@/stores/statistics";
 
@@ -34,15 +34,35 @@ const chartData = {
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  backgroundColor: (ctx: any) => {
+    const w = ctx.chart.width;
+    const canvas = ctx.chart.ctx;
+    const gradient = canvas.createLinearGradient(100, 0, w, 0);
+    gradient.addColorStop(0, "#6366f1");
+    gradient.addColorStop(0.5, "#a855f7");
+    gradient.addColorStop(1, "#ec4899");
+
+    return gradient;
+  },
   indexAxis: "y",
+  borderRadius: 5,
+  borderSkipped: false,
   scales: {
-    y: { grid: { display: false } },
+    y: {
+      grid: { display: false, drawBorder: false },
+      ticks: { font: { size: 14, weight: "500" } },
+    },
     x: {
       display: false,
     },
   },
   plugins: {
     legend: false,
+    tooltip: {
+      callbacks: {
+        title: () => "",
+      },
+    },
   },
 } as any;
 </script>

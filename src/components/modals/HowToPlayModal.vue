@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ModalDialog from "@/components/ModalDialog.vue";
+import ModalDialog from "@/components/modals/ModalDialog.vue";
 import { useModalsStore } from "@/stores/modals";
 import DemoRanking from "@/components/DemoRanking.vue";
 
@@ -16,6 +16,7 @@ const modalStore = useModalsStore();
         Drag and drop the cards to order them according to the given criterion.
       </p>
       <p>A new ranking is available every day!</p>
+      <br />
       <p>
         The displayed score corresponds to the number of cards in the correct
         position. However, this score does not always reflect how good the

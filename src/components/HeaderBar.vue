@@ -5,8 +5,8 @@ import {
   ChartBarIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/vue/24/outline";
-import StatisticsModal from "@/components/StatisticsModal.vue";
-import HowToPlayModal from "@/components/HowToPlayModal.vue";
+import StatisticsModal from "@/components/modals/StatisticsModal.vue";
+import HowToPlayModal from "@/components/modals/HowToPlayModal.vue";
 import { shuffle } from "lodash";
 
 const letters = ["S", "O", "R", "T", "L", "E"];
