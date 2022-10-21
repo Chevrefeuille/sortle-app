@@ -50,6 +50,7 @@ export const useHistoryStore = defineStore("history", () => {
       } else {
         currentState.value = stateRecord.state;
       }
+      error.value = "";
     } catch (err: any) {
       error.value = err;
     }
