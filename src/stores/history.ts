@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import type { IHistory, IState, IStateRecord, IChoice } from "@/types";
 import { fetchRankingByDate } from "@/services/api";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { startOfDay, isSameDay } from "date-fns";
 
 export const useHistoryStore = defineStore("history", () => {
@@ -20,7 +20,11 @@ export const useHistoryStore = defineStore("history", () => {
     correctPositions: null,
   });
 
-  const isDaily = computed(() => isSameDay(new Date(), date.value));
+  const isDaily = computed(() => {
+    const now = new Date();
+    const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    return isSameDay(utcNow, date.value);
+  });
 
   const setDate = (newDate: Date) => {
     date.value = startOfDay(newDate);
@@ -73,15 +77,18 @@ export const useHistoryStore = defineStore("history", () => {
       }
     );
     currentState.value.submitted = true;
-    let today = new Date();
-    const offset = today.getTimezoneOffset();
-    today = new Date(today.getTime() - offset * 60 * 1000);
-    const dateString = today.toISOString().split("T")[0];
+    const now = new Date();
+    const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    const dateString = utcNow.toISOString().split("T")[0];
     history.value.stateRecords.push({
       date: dateString,
       state: currentState.value,
     });
   };
+
+  watch(date, async () => {
+    getRankingFromDate(date.value);
+  });
 
   return {
     history,

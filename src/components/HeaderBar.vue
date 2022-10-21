@@ -34,13 +34,10 @@ const modalStore = useModalsStore();
 
 const historyStore = useHistoryStore();
 
-const date = ref(new Date());
-const minDate = computed(() => new Date(2022, 9, 18));
-const maxDate = computed(() => new Date());
-
-watch(date, async () => {
-  historyStore.setDate(date.value);
-  historyStore.getRankingFromDate(date.value);
+const minDate = computed(() => new Date(2022, 9, 20));
+const maxDate = computed(() => {
+  const now = new Date();
+  return new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 });
 </script>
 
@@ -92,7 +89,7 @@ watch(date, async () => {
     </div>
     <div>
       <Datepicker
-        v-model="date"
+        v-model="historyStore.date"
         :minDate="minDate"
         :maxDate="maxDate"
         :enableTimePicker="false"

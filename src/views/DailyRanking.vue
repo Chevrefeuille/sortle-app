@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted } from "vue";
 
 import HeaderBar from "@/components/HeaderBar.vue";
 import RankingCard from "@/components/RankingCard.vue";
@@ -13,7 +13,10 @@ const statisticsStore = useStatisticsStore();
 const historyStore = useHistoryStore();
 
 onMounted(() => {
-  historyStore.getRankingFromDate(new Date());
+  var now = new Date();
+  var utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  historyStore.date = utc;
+  // historyStore.getRankingFromDate(utc);
 });
 
 const submit = async () => {
