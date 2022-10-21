@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useModalsStore } from "@/stores/modals";
 import { useHistoryStore } from "@/stores/history";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 import {
   ChartBarIcon,
@@ -95,6 +96,7 @@ const maxDate = computed(() => {
         :enableTimePicker="false"
         :clearable="false"
         :auto-apply="true"
+        :highlight="historyStore.getDatesPlayed"
         preventMinMaxNavigation
       />
     </div>
@@ -103,3 +105,10 @@ const maxDate = computed(() => {
   <StatisticsModal />
   <HowToPlayModal />
 </template>
+
+<style>
+.dp__theme_light {
+  --dp-primary-color: #a855f7;
+  --dp-highlight-color: #d8b4fe;
+}
+</style>

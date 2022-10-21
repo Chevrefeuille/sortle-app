@@ -90,6 +90,12 @@ export const useHistoryStore = defineStore("history", () => {
     getRankingFromDate(date.value);
   });
 
+  const getDatesPlayed = computed(() => {
+    return history.value.stateRecords.map(
+      (stateRecord) => new Date(stateRecord.date)
+    );
+  });
+
   return {
     history,
     date,
@@ -100,5 +106,6 @@ export const useHistoryStore = defineStore("history", () => {
     isDaily,
     setDate,
     updateState,
+    getDatesPlayed,
   };
 });
