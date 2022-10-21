@@ -69,6 +69,7 @@ const fetchPageRankings = ({
             :has-hidden-values="false"
             :is-draggable="false"
             :correction="null"
+            :show-rank="true"
           ></RankingCard>
           <RouterLink :to="ranking._id ? `/admin/rankings/${ranking._id}` : '#'"
             ><PencilSquareIcon
