@@ -5,6 +5,7 @@ import router from "./router";
 import { createAuth0 } from "@auth0/auth0-vue";
 
 import "./assets/base.css";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const app = createApp(App);
 

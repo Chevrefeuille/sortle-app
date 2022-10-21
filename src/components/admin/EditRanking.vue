@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fetchRanking, updateRanking } from "@/services/api";
+import { fetchRankingById, updateRanking } from "@/services/api";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { onMounted, ref, watch } from "vue";
 import type { IRanking } from "@/types";
@@ -16,13 +16,17 @@ const token = ref("");
 
 onMounted(async () => {
   token.value = await getAccessTokenSilently();
-  ranking.value = await fetchRanking(route.params.id as string, token.value);
+  ranking.value = await fetchRankingById(
+    route.params.id as string,
+    token.value
+  );
 });
 
 watch(
   () => route.params.id,
   async (rankingID: any) => {
-    if (rankingID) ranking.value = await fetchRanking(rankingID, token.value);
+    if (rankingID)
+      ranking.value = await fetchRankingById(rankingID, token.value);
   }
 );
 

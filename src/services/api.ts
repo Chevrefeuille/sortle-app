@@ -5,25 +5,9 @@ const instance = axios.create({
   timeout: 10000,
 });
 
-export const getDailyRanking = async () => {
+export const sendProposed = async (answer: any) => {
   try {
-    const res = await instance.get("daily");
-    const data = res.data;
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log("error message: ", error.message);
-      throw error.message;
-    } else {
-      console.log("unexpected error: ", error);
-      throw "An unexpected error occurred";
-    }
-  }
-};
-
-export const sendAnswer = async (answer: any) => {
-  try {
-    const res = await instance.post("check", answer);
+    const res = await instance.post("rankings/check", answer);
     const data = res.data;
     return data;
   } catch (error) {
@@ -60,7 +44,7 @@ export const fetchRankings = async (
   }
 };
 
-export const fetchRanking = async (id: string, token: string) => {
+export const fetchRankingById = async (id: string, token: string) => {
   try {
     const res = await instance.get(`rankings/${id}`, {
       headers: { Authorization: "Bearer " + token },
@@ -105,6 +89,25 @@ export const updateRanking = async (
     const res = await instance.patch(`rankings/${id}`, ranking, {
       headers: { Authorization: "Bearer " + token },
     });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("error message: ", error.message);
+      throw error.message;
+    } else {
+      console.log("unexpected error: ", error);
+      throw "An unexpected error occurred";
+    }
+  }
+};
+
+export const fetchRankingByDate = async (date: Date) => {
+  try {
+    const offset = date.getTimezoneOffset();
+    date = new Date(date.getTime() - offset * 60 * 1000);
+    const dateString = date.toISOString().split("T")[0];
+    const res = await instance.get(`rankings/date/${dateString}`);
     const data = res.data;
     return data;
   } catch (error) {

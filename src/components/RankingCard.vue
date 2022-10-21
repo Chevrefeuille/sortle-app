@@ -7,6 +7,7 @@ import draggable from "vuedraggable";
 const props = defineProps<{
   ranking: IRanking;
   hasHiddenValues: boolean;
+  showRank: boolean;
   isDraggable: boolean;
   correction: number[] | null;
 }>();
@@ -56,15 +57,16 @@ const { drag, dragOptions } = useDraggable();
             }"
           >
             <div
-              v-if="correction"
+              v-if="showRank"
               class="absolute -right-3 -top-3 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white p-1 shadow-md"
               :class="{
-                'bg-red-500': !correction[index],
-                'bg-green-500': correction[index],
+                'bg-red-500': correction && !correction[index],
+                'bg-green-500': correction && correction[index],
+                'bg-gray-500': !correction,
               }"
             >
               <div class="font-bold text-gray-100">
-                {{ element.rank }}
+                {{ element.rank + 1 }}
               </div>
             </div>
             <div>
