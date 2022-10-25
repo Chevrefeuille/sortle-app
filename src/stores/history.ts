@@ -79,8 +79,7 @@ export const useHistoryStore = defineStore("history", () => {
     );
     currentState.value.submitted = true;
     const now = new Date();
-    const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-    const dateString = utcNow.toISOString().split("T")[0];
+    const dateString = now.toISOString().split("T")[0];
     history.value.stateRecords.push({
       date: dateString,
       state: currentState.value,

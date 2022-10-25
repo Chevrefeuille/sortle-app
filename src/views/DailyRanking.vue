@@ -16,7 +16,6 @@ onMounted(() => {
   var now = new Date();
   var utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
   historyStore.date = utc;
-  // historyStore.getRankingFromDate(utc);
 });
 
 const submit = async () => {
