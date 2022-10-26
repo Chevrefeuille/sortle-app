@@ -26,11 +26,6 @@ ChartJS.register(
 const modalStore = useModalsStore();
 const statisticsStore = useStatisticsStore();
 
-const scores = [0, 1, 2, 3, 4, 5];
-const chartData = {
-  labels: scores,
-  datasets: [{ data: scores.map((s) => statisticsStore.statistics.scores[s]) }],
-};
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -93,7 +88,7 @@ const chartOptions = {
       </p>
       <Bar
         :chart-options="chartOptions"
-        :chart-data="chartData"
+        :chart-data="statisticsStore.getBarValues"
         :chart-id="'start-chart'"
         :css-classes="'h-64'"
       />
