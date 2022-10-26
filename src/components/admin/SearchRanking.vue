@@ -1,31 +1,26 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { debounce } from "lodash";
 import type { IRanking } from "@/types";
-import { useAuth0 } from "@auth0/auth0-vue";
 import { searchRanking } from "@/services/api";
 import { PencilSquareIcon } from "@heroicons/vue/24/outline";
 import RankingCard from "@/components/RankingCard.vue";
+import { useAuthStore } from "@/stores/auth";
 
-const { getAccessTokenSilently } = useAuth0();
+const authStore = useAuthStore();
 
 const inputQuery = ref("");
 const loadingSearch = ref(false);
 const rankings = ref<IRanking[]>([]);
 
-const token = ref("");
-
 const search = async () => {
   loadingSearch.value = true;
-  rankings.value = await searchRanking(inputQuery.value, token.value);
+  const token = await authStore.getToken();
+  rankings.value = await searchRanking(inputQuery.value, token);
   loadingSearch.value = false;
 };
 
 const debouncedSearch = debounce(search, 1000);
-
-onMounted(async () => {
-  token.value = await getAccessTokenSilently();
-});
 </script>
 
 <template>

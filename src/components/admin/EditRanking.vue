@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { fetchRankingById, updateRanking } from "@/services/api";
-import { useAuth0 } from "@auth0/auth0-vue";
 import { onMounted, ref, watch } from "vue";
 import type { IRanking } from "@/types";
 import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
-const { getAccessTokenSilently } = useAuth0();
+const authStore = useAuthStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -15,11 +15,8 @@ const ranking = ref<IRanking | null>(null);
 const token = ref("");
 
 onMounted(async () => {
-  token.value = await getAccessTokenSilently();
-  ranking.value = await fetchRankingById(
-    route.params.id as string,
-    token.value
-  );
+  const token = await authStore.getToken();
+  ranking.value = await fetchRankingById(route.params.id as string, token);
 });
 
 watch(

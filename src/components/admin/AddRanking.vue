@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { createRanking } from "@/services/api";
-import { useAuth0 } from "@auth0/auth0-vue";
 import { onMounted, ref } from "vue";
 import type { IRanking } from "@/types";
+import { useAuthStore } from "@/stores/auth";
 
-const { getAccessTokenSilently } = useAuth0();
+const authStore = useAuthStore();
 
 const ranking = ref<IRanking | null>(null);
-const token = ref("");
 
 const initRanking = () => {
   let choices = [];
@@ -29,12 +28,12 @@ const initRanking = () => {
 };
 
 onMounted(async () => {
-  token.value = await getAccessTokenSilently();
   initRanking();
 });
 
 const addRanking = async () => {
-  createRanking(ranking.value, token.value).then(() => {
+  const token = await authStore.getToken();
+  createRanking(ranking.value, token).then(() => {
     initRanking();
   });
 };

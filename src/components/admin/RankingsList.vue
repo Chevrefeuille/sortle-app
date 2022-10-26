@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { fetchRankings } from "@/services/api";
-import { useAuth0 } from "@auth0/auth0-vue";
 import { onMounted, ref } from "vue";
 import type { IRanking } from "@/types";
 import RankingCard from "@/components/RankingCard.vue";
@@ -10,8 +9,9 @@ import {
   ArrowRightCircleIcon,
   PencilSquareIcon,
 } from "@heroicons/vue/24/outline";
+import { useAuthStore } from "@/stores/auth";
 
-const { getAccessTokenSilently } = useAuth0();
+const authStore = useAuthStore();
 
 const rankings = ref<IRanking[]>([]);
 const token = ref("");
@@ -20,26 +20,24 @@ const total = ref(0);
 const pageSize = ref(4);
 
 onMounted(async () => {
-  token.value = await getAccessTokenSilently();
   fetchPageRankings({
     currentPage: 1,
     currentPageSize: pageSize.value,
   });
 });
 
-const fetchPageRankings = ({
+const fetchPageRankings = async ({
   currentPage,
   currentPageSize,
 }: {
   currentPage: number;
   currentPageSize: number;
 }) => {
-  fetchRankings(currentPage, currentPageSize, token.value).then(
-    (responseData) => {
-      rankings.value = responseData.rankings;
-      total.value = responseData.total;
-    }
-  );
+  const token = await authStore.getToken();
+  fetchRankings(currentPage, currentPageSize, token).then((responseData) => {
+    rankings.value = responseData.rankings;
+    total.value = responseData.total;
+  });
 };
 </script>
 
