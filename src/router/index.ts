@@ -4,6 +4,7 @@ import AdminPanel from "@/views/AdminPanel.vue";
 import AddRanking from "@/components/admin/AddRanking.vue";
 import EditRanking from "@/components/admin/EditRanking.vue";
 import RankingsList from "@/components/admin/RankingsList.vue";
+import SearchRanking from "@/components/admin/SearchRanking.vue";
 import { authGuard } from "@auth0/auth0-vue";
 
 const router = createRouter({
@@ -27,6 +28,10 @@ const router = createRouter({
         {
           path: "add",
           component: AddRanking,
+        },
+        {
+          path: "search",
+          component: SearchRanking,
         },
         {
           path: "rankings/:id",

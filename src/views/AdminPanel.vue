@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { RouterView, RouterLink } from "vue-router";
-import { PlusCircleIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
+import {
+  PlusCircleIcon,
+  ListBulletIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/vue/24/outline";
 </script>
 
 <template>
@@ -34,6 +38,16 @@ import { PlusCircleIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
               ><div class="flex items-center space-x-2">
                 <PlusCircleIcon class="h-6 w-6" />
                 <div>Add a new ranking</div>
+              </div></RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink
+              to="/admin/search"
+              class="transition duration-200 ease-in hover:text-white"
+              ><div class="flex items-center space-x-2">
+                <MagnifyingGlassIcon class="h-6 w-6" />
+                <div>Search for rankings</div>
               </div></RouterLink
             >
           </li>

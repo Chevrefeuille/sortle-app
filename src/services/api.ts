@@ -120,3 +120,23 @@ export const fetchRankingByDate = async (date: Date) => {
     }
   }
 };
+
+export const searchRanking = async (query: string, token: string) => {
+  try {
+    const res = await instance.get("rankings/search", {
+      params: { query: query },
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    const data = res.data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("error message: ", error.message);
+      throw error.message;
+    } else {
+      console.log("unexpected error: ", error);
+      throw "An unexpected error occurred";
+    }
+  }
+};
