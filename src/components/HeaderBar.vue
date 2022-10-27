@@ -113,4 +113,9 @@ const maxDate = computed(() => {
   --dp-primary-color: #a855f7;
   --dp-highlight-color: #d8b4fe;
 }
+@media only screen and (max-width: 600px) {
+  .dp__arrow_top {
+    display: none;
+  }
+}
 </style>
