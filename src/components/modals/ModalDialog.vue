@@ -43,7 +43,7 @@ defineProps<{
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-gray-100 p-8 text-left text-gray-700 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+              class="relative transform overflow-hidden rounded-lg bg-gray-100 p-8 text-left text-gray-700 shadow-xl transition-all dark:bg-gray-800 dark:text-gray-200 sm:my-8 sm:w-full sm:max-w-lg"
             >
               <div
                 class="absolute top-2 right-2 cursor-pointer stroke-2"

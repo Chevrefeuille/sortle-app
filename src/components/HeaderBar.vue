@@ -8,10 +8,14 @@ import {
   ChartBarIcon,
   QuestionMarkCircleIcon,
   CalendarDaysIcon,
+  SunIcon,
+  MoonIcon,
 } from "@heroicons/vue/24/outline";
 import StatisticsModal from "@/components/modals/StatisticsModal.vue";
 import HowToPlayModal from "@/components/modals/HowToPlayModal.vue";
 import { shuffle } from "lodash";
+
+import { useDark, useToggle } from "@vueuse/core";
 
 import Datepicker from "@vuepic/vue-datepicker";
 
@@ -41,6 +45,9 @@ const maxDate = computed(() => {
   const now = new Date();
   return new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 });
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 </script>
 
 <template>
@@ -62,6 +69,7 @@ const maxDate = computed(() => {
             :auto-apply="true"
             :highlight="historyStore.getDatesPlayed"
             preventMinMaxNavigation
+            :dark="isDark"
             ><template #trigger
               ><CalendarDaysIcon
                 class="h-6 w-8 text-indigo-500 transition duration-100 ease-in-out hover:text-indigo-300" /></template
@@ -100,6 +108,16 @@ const maxDate = computed(() => {
             class="h-6 w-8 text-pink-500 transition duration-100 ease-in-out hover:text-pink-300"
           />
         </div>
+        <div class="cursor-pointer" @click="toggleDark()">
+          <SunIcon
+            v-if="isDark"
+            class="h-6 w-8 text-pink-500 transition duration-100 ease-in-out hover:text-pink-300"
+          />
+          <MoonIcon
+            v-else
+            class="h-6 w-8 text-pink-500 transition duration-100 ease-in-out hover:text-pink-300"
+          />
+        </div>
       </div>
     </div>
   </header>
@@ -112,6 +130,13 @@ const maxDate = computed(() => {
 .dp__theme_light {
   --dp-primary-color: #a855f7;
   --dp-highlight-color: #d8b4fe;
+  --dp-text-color: #334155;
+}
+.dp__theme_dark {
+  --dp-background-color: #334155;
+  --dp-primary-color: #a855f7;
+  --dp-highlight-color: #c084fc;
+  --dp-text-color: #e2e8f0;
 }
 @media only screen and (max-width: 600px) {
   .dp__arrow_top {

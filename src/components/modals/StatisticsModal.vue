@@ -2,6 +2,9 @@
 import ModalDialog from "@/components/modals/ModalDialog.vue";
 import { useModalsStore } from "@/stores/modals";
 import { useStatisticsStore } from "@/stores/statistics";
+import { ref } from "vue";
+
+import { useDark } from "@vueuse/core";
 
 import { Bar } from "vue-chartjs";
 import {
@@ -26,7 +29,7 @@ ChartJS.register(
 const modalStore = useModalsStore();
 const statisticsStore = useStatisticsStore();
 
-const chartOptions = {
+const chartOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
   backgroundColor: (ctx: any) => {
@@ -45,7 +48,7 @@ const chartOptions = {
   scales: {
     y: {
       grid: { display: false, drawBorder: false },
-      ticks: { font: { size: 14, weight: "500" } },
+      ticks: { font: { size: 16, weight: "500" } },
     },
     x: {
       display: false,
@@ -59,7 +62,14 @@ const chartOptions = {
       },
     },
   },
-} as any;
+}) as any;
+
+useDark({
+  onChanged(dark: boolean) {
+    const color = dark ? "#e5e7eb" : "#374151";
+    chartOptions.value.scales.y.ticks.color = color;
+  },
+});
 </script>
 <template>
   <ModalDialog
