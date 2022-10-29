@@ -65,7 +65,7 @@ const submit = async () => {
       </div>
       <div
         v-if="historyStore.currentState.submitted"
-        class="my-8 flex justify-center text-xl text-gray-800 dark:text-gray-200"
+        class="mt-8 flex justify-center text-xl text-gray-800 dark:text-gray-200"
       >
         <div>
           <p class="text-xl">
