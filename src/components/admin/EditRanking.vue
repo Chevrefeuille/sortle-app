@@ -15,8 +15,11 @@ const ranking = ref<IRanking | null>(null);
 const token = ref("");
 
 onMounted(async () => {
-  const token = await authStore.getToken();
-  ranking.value = await fetchRankingById(route.params.id as string, token);
+  token.value = await authStore.getToken();
+  ranking.value = await fetchRankingById(
+    route.params.id as string,
+    token.value
+  );
 });
 
 watch(

@@ -31,7 +31,7 @@ const { drag, dragOptions } = useDraggable();
       </p>
     </div>
     <div
-      class="mb-8 flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
+      class="mb-8 flex flex-col-reverse items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
     >
       <div class="md:w-1/12">
         <p class="text-right text-gray-200">
