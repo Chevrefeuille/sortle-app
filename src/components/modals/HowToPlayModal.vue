@@ -22,9 +22,9 @@ const modalStore = useModalsStore();
         position. However, this score does not always reflect how good the
         proposed ranking is. Consider these two rankings:
       </p>
-      <DemoRanking :values="[1, 3, 2, 4, 5]" />
+      <DemoRanking :values="[5, 4, 3, 2, 1]" />
       <div class="text-center">and</div>
-      <DemoRanking :values="[5, 2, 3, 4, 1]" />
+      <DemoRanking :values="[1, 4, 3, 2, 5]" />
       <p>
         Both rankings have two badly positioned cards, meaning a score of
         <span class="font-bold">2/5</span>. But, inverting the first and last

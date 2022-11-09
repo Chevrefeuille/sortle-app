@@ -66,7 +66,7 @@ const { drag, dragOptions } = useDraggable();
               }"
             >
               <div class="font-bold text-gray-100">
-                {{ element.rank + 1 }}
+                {{ 5 - element.rank }}
               </div>
             </div>
             <div>
