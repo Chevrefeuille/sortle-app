@@ -14,8 +14,8 @@ const props = defineProps<{ values: number[] }>();
         <div
           class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-white p-1 text-xs shadow-md"
           :class="{
-            'bg-red-500': val != i + 1,
-            'bg-green-500': val == i + 1,
+            'bg-red-500': val != 5 - i,
+            'bg-green-500': val == 5 - i,
           }"
         >
           <div class="font-bold text-gray-100">
@@ -27,8 +27,8 @@ const props = defineProps<{ values: number[] }>();
             <span
               class="text-xl font-semibold"
               :class="{
-                'text-red-500': val != i + 1,
-                'text-green-500 ': val == i + 1,
+                'text-red-500': val != 5 - i,
+                'text-green-500 ': val == 5 - i,
               }"
               >{{ val }}</span
             >
