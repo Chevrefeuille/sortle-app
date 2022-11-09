@@ -19,7 +19,7 @@ const props = defineProps<{ values: number[] }>();
           }"
         >
           <div class="font-bold text-gray-100">
-            {{ i + 1 }}
+            {{ 5 - i }}
           </div>
         </div>
         <div>

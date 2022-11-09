@@ -22,7 +22,7 @@ const modalStore = useModalsStore();
         position. However, this score does not always reflect how good the
         proposed ranking is. Consider these two rankings:
       </p>
-      <DemoRanking :values="[5, 4, 3, 2, 1]" />
+      <DemoRanking :values="[5, 4, 2, 3, 1]" />
       <div class="text-center">and</div>
       <DemoRanking :values="[1, 4, 3, 2, 5]" />
       <p>
