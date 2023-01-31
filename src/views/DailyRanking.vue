@@ -68,9 +68,9 @@ const submit = async () => {
       </div>
       <div
         v-if="historyStore.currentState.submitted"
-        class="mt-8 flex flex-col justify-center space-y-8 text-xl text-gray-800 dark:text-gray-200"
+        class="mt-8 flex flex-col items-center justify-center space-y-8 text-xl text-gray-800"
       >
-        <div class="flex justify-center">
+        <div class="flex justify-center dark:text-gray-200">
           <div>
             <p class="text-xl">
               Correctly positioned:
@@ -87,7 +87,7 @@ const submit = async () => {
           </div>
         </div>
         <div
-          class="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-4"
+          class="flex max-w-md flex-col items-center justify-center space-y-2 rounded-md bg-slate-200 px-4 py-4 font-light outline-dashed outline-2 outline-offset-2 outline-purple-500 md:flex-row md:space-x-4"
         >
           <div>You enjoyed the game ?</div>
           <div>
