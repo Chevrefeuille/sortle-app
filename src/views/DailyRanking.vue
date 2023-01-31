@@ -33,7 +33,10 @@ const submit = async () => {
 <template>
   <HeaderBar />
   <div class="px-4">
-    <div v-if="historyStore.error" class="text-center text-2xl">
+    <div
+      v-if="historyStore.error"
+      class="text-center text-2xl dark:text-gray-200"
+    >
       Sorry, something went wrong...
     </div>
     <div v-else>
