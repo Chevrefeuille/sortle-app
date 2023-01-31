@@ -68,21 +68,38 @@ const submit = async () => {
       </div>
       <div
         v-if="historyStore.currentState.submitted"
-        class="mt-8 flex justify-center text-xl text-gray-800 dark:text-gray-200"
+        class="mt-8 flex flex-col justify-center space-y-8 text-xl text-gray-800 dark:text-gray-200"
       >
-        <div>
-          <p class="text-xl">
-            Correctly positioned:
-            <span class="font-bold"
-              >{{ historyStore.currentState.score }} / 5</span
-            >
-          </p>
-          <p class="mb-4 text-xl">
-            Kendall-tau score:
-            <span class="font-bold"
-              >{{ historyStore.currentState.kendallScore }}%</span
-            >
-          </p>
+        <div class="flex justify-center">
+          <div>
+            <p class="text-xl">
+              Correctly positioned:
+              <span class="font-bold"
+                >{{ historyStore.currentState.score }} / 5</span
+              >
+            </p>
+            <p class="mb-4 text-xl">
+              Kendall-tau score:
+              <span class="font-bold"
+                >{{ historyStore.currentState.kendallScore }}%</span
+              >
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-4"
+        >
+          <div>You enjoyed the game ?</div>
+          <div>
+            <a href="https://ko-fi.com/R5R4FKZ2C" target="_blank"
+              ><img
+                height="36"
+                style="border: 0px; height: 36px"
+                src="https://storage.ko-fi.com/cdn/kofi2.png?v=3"
+                border="0"
+                alt="Buy Me a Coffee at ko-fi.com"
+            /></a>
+          </div>
         </div>
       </div>
     </div>
